@@ -1,0 +1,16 @@
+type Quote{
+    id: ID
+    type: String!
+    author: String!
+}
+
+type User{
+    id: ID
+    name: String!
+    email: String!
+    password: String!
+}
+
+type Query{
+    users: [User]!
+}
