@@ -2,6 +2,8 @@ const typeDefs = `#graphql
     type Query{
         users: [User]
         quotes: [Quote]
+        user(_id:ID!): User
+        quote(by: ID!): Quote
     }
 
     type User{
@@ -21,4 +23,4 @@ const typeDefs = `#graphql
 
 `;
 
-export default typeDefs
+export default typeDefs;
