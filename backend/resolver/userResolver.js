@@ -1,4 +1,15 @@
 import UserModel from "../model/userModel.js"; // wtf if we don't write .js it wont work??
+import jwt from 'jsonwebtoken';
+
+const createToken = id=>{
+  return jwt.sign(
+    {id}, 
+    process.env.JWT_SECRET,{
+      expiresIn: process.env.JWT_EXPIRES_IN
+    }
+  )
+}
+
 
 export const addUserRes = async (_, args)=>{
     try{
@@ -20,3 +31,12 @@ export const getUsers = async () => {
   }
 
 };
+
+export const getUser = async (_, args) =>{
+  try {
+    const user = await UserModel.findById(args._id);
+    return user
+  } catch (error) {
+    console.log('Error while getting the user: ' + error);
+  }
+}

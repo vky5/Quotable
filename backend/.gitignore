@@ -1,2 +1,4 @@
 node_modules
-*.env
+# *.env
+
+# I am pushing env file so that anyone can run this on their localhost

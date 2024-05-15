@@ -11,7 +11,6 @@ const typeDefs = `#graphql
         firstName: String!
         lastName: String
         email: String!
-        password: String!
         quotes: [Quote]
     }
 
