@@ -4,6 +4,7 @@ const typeDefs = `#graphql
         quotes: [Quote]
         user(_id:ID!): User
         quote(by: ID!): Quote
+        login(by: Login!): UserAuthResponse
     }
 
     type User {
@@ -22,12 +23,22 @@ const typeDefs = `#graphql
     }
 
     type Mutation {
-        addUser(userNew: UserInput!
+        signup(userNew: UserInput!
             # firstName: String!,
             # lastName: String,
             # email: String!,
             # password: String!
-        ): User
+        ): UserAuthResponse
+    }
+
+    type UserAuthResponse {
+        user: User
+        token: String
+    }
+
+    type Login {
+        email: String!
+        password: String!
     }
 
     type Quote {

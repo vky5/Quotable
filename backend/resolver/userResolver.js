@@ -14,7 +14,10 @@ const createToken = id=>{
 export const addUserRes = async (_, args)=>{
     try{
         const newUser = await UserModel.create(args['userNew']);
-        return newUser;
+        return {
+          user2: newUser,
+          token: createToken(newUser._id)
+        };
 
     }catch(err){
         console.log('Error in creating new User: ' + err);
@@ -38,5 +41,31 @@ export const getUser = async (_, args) =>{
     return user
   } catch (error) {
     console.log('Error while getting the user: ' + error);
+  }
+}
+
+
+const validateJWT = async (_, args) =>{
+  try {
+    let token;
+
+    if (args['authorization']){
+      token = args['authorization'].split(' ')
+    }
+
+  } catch (error) {
+    
+  }
+}
+
+export const login = async (_, args)=>{
+  try {
+    const user = await UserModel.findOne({
+      email: args['email'],
+      password: args['password']
+    })
+
+  } catch (error) {
+    
   }
 }

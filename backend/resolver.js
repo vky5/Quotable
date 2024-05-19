@@ -9,6 +9,7 @@ const resolver = {
         quotes: ()=> quotes,
         user: getUser,
         quote: (_, {by})=> quotes.find(quote=>quote.by==by),
+        login: 
 
         
     },
@@ -25,7 +26,7 @@ const resolver = {
     // just writing notation to change anything in db wont change the state of the db it will only reflect that change in that particular instance 
     // to update the change in db we need to write the crud operation from ourself.
     Mutation: {
-        addUser: addUserRes
+        signup: addUserRes
     }
     
 }
