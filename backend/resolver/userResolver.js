@@ -15,7 +15,7 @@ export const addUserRes = async (_, args)=>{
     try{
         const newUser = await UserModel.create(args['userNew']);
         return {
-          user2: newUser,
+          user: newUser,
           token: createToken(newUser._id)
         };
 
