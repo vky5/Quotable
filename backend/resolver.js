@@ -1,5 +1,5 @@
 import {quotes, users} from './_db.js'
-import { getUsers, addUserRes, getUser } from './resolver/userResolver.js'
+import { getUsers, addUserRes,loginRes, getUser } from './resolver/userResolver.js'
 
 
 
@@ -8,8 +8,8 @@ const resolver = {
         users: getUsers, // this takes a function and here we are returning the user 
         quotes: ()=> quotes,
         user: getUser,
-        quote: (_, {by})=> quotes.find(quote=>quote.by==by)
-        // login: 
+        quote: (_, {by})=> quotes.find(quote=>quote.by==by),
+        login: loginRes
 
         
     },

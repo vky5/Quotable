@@ -45,27 +45,33 @@ export const getUser = async (_, args) =>{
 }
 
 
-const validateJWT = async (_, args) =>{
-  try {
-    let token;
+// const validateJWT = async (_, args) =>{
+//   try {
+//     let token;
 
-    if (args['authorization']){
-      token = args['authorization'].split(' ')
+//     if (args['authorization']){
+//       token = args['authorization'].split(' ')
+//     }
+
+//   } catch (error) {
+    
+//   }
+// }
+
+export const loginRes = async (_, args)=>{
+try {
+  
+  const user = await UserModel.findOne({ email: args.credentials.email }).select('+password');
+  const isPasswordCorrect = await user.correctPassword(args.credentials.password, user.password);
+
+  if (isPasswordCorrect){
+    return {
+      user: user,
+      token: createToken(user._id)
     }
-
-  } catch (error) {
-    
   }
+
+} catch (error) {
+  console.log("error: " + error.sta)
 }
-
-export const login = async (_, args)=>{
-  try {
-    const user = await UserModel.findOne({
-      email: args['email'],
-      password: args['password']
-    })
-
-  } catch (error) {
-    
-  }
 }
