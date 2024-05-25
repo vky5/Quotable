@@ -1,10 +1,11 @@
 const typeDefs = `#graphql
+
     type Query {
         users: [User]
         quotes: [Quote]
         user(_id: ID!): User
         quote(by: ID!): Quote
-        login(credentials: LoginInput!): UserAuthResponse
+        
     }
 
     type User {
@@ -29,6 +30,8 @@ const typeDefs = `#graphql
 
     type Mutation {
         signup(userNew: UserInput!): UserAuthResponse
+        login(credentials: LoginInput!): Token
+        createQuote(quoteString: String) : Quote
     }
 
     type UserAuthResponse {
@@ -36,10 +39,20 @@ const typeDefs = `#graphql
         token: String
     }
 
+    type Quote{
+        quote: User
+    }
+
+    type Token{
+        token: String
+    }
+
     type Quote {
         by: ID!
         content: String!
     }
+
+
 `;
 
 export default typeDefs;

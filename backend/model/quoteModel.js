@@ -1,17 +1,15 @@
-import mongoose, { Mongoose } from "mongoose";
-import UserModel from "./userModel";
+import mongoose from 'mongoose';
 
-const quoteSchema = mongoose.Schema({
+const quoteSchema = new mongoose.Schema({
     quote: {
         type: String,
-        // required: true a person can create account
+        required: true,  // Ensure a quote is required if that's the intended functionality
     },
-
     by: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: UserModel
+        ref: 'UserModel'  // Use the model name as a string
     }
-})
+});
 
-const QuoteModel = mongoose.model('QuoteModel', quoteSchema)
+const QuoteModel = mongoose.model('QuoteModel', quoteSchema);
 export default QuoteModel;
