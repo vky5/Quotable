@@ -23,8 +23,6 @@ mongoose
   typeDefs: typeDefs,
   resolvers: resolvers,
   context: async ({ req }) => {
-    // Server might not be ready yet, wait for it to start
-    await startStandaloneServer(server, { listen: { port: 4000 } });
     console.log('Hey');
   }
 });
