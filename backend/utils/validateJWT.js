@@ -1,22 +1,15 @@
-const util = require('util');
+import jwt from "jsonwebtoken"
 
-export const validateJWT = async (req)=>{
+export const validateJWT = async ({req})=>{
+    // here we are taking token from the header
     let token;
-    if (req.headers.authorization && req.headers.authorization.startWith('Bearer')){
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1];
     }
 
-    if (!token){
-        throw new Error('You are not logged in !');
-    }
-
-    const verifyToken = util.promisify(jwt.verify);
-
-    const decoded =  await verifyToken(token,  process.env.JWT_SECRET);
-
-    const user = await UserData.findById(decoded.id);
-
-    if (!user){
-        throw new Error('User no longer exists');
-    }
+    // we are checking if the token exists or not since context should not throw error at any point we are going to handle that in every function
+    const decoded =  await jwt.verify(token,  process.env.JWT_SECRET);
+    return {
+        id: decoded.id
+    }    
 }

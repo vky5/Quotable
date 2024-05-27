@@ -6,8 +6,8 @@ const quoteSchema = new mongoose.Schema({
         required: true,  // Ensure a quote is required if that's the intended functionality
     },
     by: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserModel'  // Use the model name as a string
+        type: String,
+        // ref: 'UserModel'  // Use the model name as a string
     }
 });
 

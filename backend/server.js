@@ -1,8 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
-import { promisify } from "util";
+import { validateJWT } from "./utils/validateJWT.js";
 import typeDefs from "./schemaQL.js";
 import resolvers from "./resolver.js";
 import mongoose from "mongoose";
@@ -20,15 +19,21 @@ mongoose
   });
 
   const server = new ApolloServer({
-  typeDefs: typeDefs,
-  resolvers: resolvers,
-  context: async ({ req }) => {
-    console.log('Hey');
-  }
-});
+    typeDefs,
+    resolvers
+  });
+
 
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
+  context : async ({ req }) => {
+    try {
+      const { id } = await validateJWT({ req });
+      return { id }; // Replace 'user' with your property name
+    } catch (error) {
+      console.error("Error validating JWT:", error);
+      return {};
+    }}
 });
 
 console.log(`🚀: Server ready at: ${url}`);

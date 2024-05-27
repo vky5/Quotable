@@ -71,6 +71,6 @@ export const loginRes = async (_, args) => {
       };
     }
   } catch (error) {
-    console.log("error: " + error.sta);
+    console.log("error: " + error);
   }
 };

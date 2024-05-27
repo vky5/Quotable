@@ -39,20 +39,14 @@ const typeDefs = `#graphql
         token: String
     }
 
-    type Quote{
-        quote: User
-    }
-
     type Token{
         token: String
     }
 
     type Quote {
-        by: ID!
-        content: String!
+        by: String
+        content: String
     }
-
-
 `;
 
 export default typeDefs;

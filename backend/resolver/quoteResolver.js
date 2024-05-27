@@ -1,15 +1,20 @@
-import Quote from '../model/quoteModel.js';
+import QuoteModel from '../model/quoteModel.js'
+import UserModel from '../model/userModel.js';
+
 
 export const quoteResolver = async (_, args, context) => {
-    if (!context.id) {
-        throw new Error('You are not logged in');
+    const user = await UserModel.findById(context.id);
+    
+    if (!user){
+        throw new Error("Given token is invalid");
     }
 
-    // Rest of your resolver logic here
-    console.log("User is authenticated, context:", context);
-    // Example operation:
-    // const quotes = await QuoteModel.find({ userId: context.id });
-    // return quotes;
+    const quote = await QuoteModel.create({
+        quote: args.quoteString,
+        by: context.id
+    })
 
-    return "Your operation result here";  // Replace with actual logic
+    return {
+        by: user.email
+    }
 };
