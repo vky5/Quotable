@@ -7,8 +7,16 @@ const quoteSchema = new mongoose.Schema({
     },
     by: {
         type: String,
-        // ref: 'UserModel'  // Use the model name as a string
+        ref: 'UserModel',  // Use the model name as a string
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: ()=>{
+            return new Date()
+        }
     }
+
 });
 
 const QuoteModel = mongoose.model('QuoteModel', quoteSchema);

@@ -4,7 +4,7 @@ const typeDefs = `#graphql
         users: [User]
         quotes: [Quote]
         user(_id: ID!): User
-        quote(by: ID!): Quote
+        quote(by: String!): [Quote]
         
     }
 

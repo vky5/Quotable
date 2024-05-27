@@ -23,15 +23,15 @@ mongoose
     resolvers
   });
 
-
+const PORT = process.env.PORT || 4000;
 const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
+  listen: { port: PORT },
   context : async ({ req }) => {
     try {
       const { id } = await validateJWT({ req });
-      return { id }; // Replace 'user' with your property name
+      return { id };
+
     } catch (error) {
-      console.error("Error validating JWT:", error);
       return {};
     }}
 });
