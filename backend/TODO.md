@@ -6,7 +6,7 @@
 - [x] See quotes of a specific user
 - [x] delete quote only by that user or admin
 - [x] Update quote
-- [ ] Admin to see all users with their corresponding quotes
+- [x] Admin to see all users with their corresponding quotes
 - [ ] Password change 
 - [ ] Password reset
 - [ ] account delete

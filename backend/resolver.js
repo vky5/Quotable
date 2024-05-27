@@ -1,5 +1,5 @@
 import {quotes, users} from './_db.js'
-import { getUsers, addUserRes,loginRes, getUser } from './resolver/userResolver.js'
+import { getUsers, addUserRes,loginRes, getUser, quoteResUser } from './resolver/userResolver.js'
 import { addQuote, deleteQuoteRes, quoteOfUser, showAllQuote,  updateQuoteRes } from './resolver/quoteResolver.js'
 
 
@@ -12,12 +12,9 @@ const resolvers = {
     },
 
     User: {
-        quotes: (user)=>{ // this quote will entrypoint will recieve individual user
-            return quotes.filter(quote=>{
-                return quote.by==user._id
-            }
-            )
-        }
+        quotes: quoteResUser 
+        // this means that we can resolve any field and manipulate the response if we want to. for example if we want all quotes to start and end with % we can create a resolver for content and 
+        //return string from here but what will be passed at parents object of the schemca which it is a member of for eample quotes is the property of User in mutation and it i
     },
 
     // just writing notation to change anything in db wont change the state of the db it will only reflect that change in that particular instance 
@@ -32,4 +29,4 @@ const resolvers = {
     
 }
 
-export default resolvers
+export default resolvers;

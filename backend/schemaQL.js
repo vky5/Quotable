@@ -18,7 +18,7 @@ const typeDefs = `#graphql
         firstName: String!
         lastName: String
         email: String!
-        quotes: [Quote]
+        quotes: [Quote] #in its parents all user will be passed 
     }
 
     input UserInput {

@@ -1,3 +1,4 @@
+import QuoteModel from "../model/quoteModel.js";
 import UserModel from "../model/userModel.js"; // wtf if we don't write .js it wont work??
 import jwt from "jsonwebtoken";
 
@@ -29,7 +30,9 @@ export const addUserRes = async (_, args) => {
 export const getUsers = async () => {
   try {
     const users = await UserModel.find({});
-    return users;
+    return users; // NOTE we don't need to specify from where quote is getting it's data because it is already defined in some place
+
+
   } catch (error) {
     console.log("Error in getting all users: " + error);
   }
@@ -63,3 +66,26 @@ export const loginRes = async (_, args) => {
     console.log("error: " + error);
   }
 };
+
+export const quoteResUser = async (user) =>{
+  const quotes = await QuoteModel.aggregate([
+    {
+      $match: { by: user.email } // Match quotes where 'by' field matches the argument
+    },
+    {
+      $project: { 
+        by: 1,
+        quote: 1,
+        _id: 1
+      }
+    }
+  ]);
+
+  return quotes.map(quot=>{
+    return {
+      _id: quot._id,
+      content: quot.quote,
+      by: quot.by
+    }
+  })
+}
