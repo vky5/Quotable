@@ -1,6 +1,6 @@
 import {quotes, users} from './_db.js'
 import { getUsers, addUserRes,loginRes, getUser } from './resolver/userResolver.js'
-import { addQuote, quoteOfUser, showAllQuote } from './resolver/quoteResolver.js'
+import { addQuote, deleteQuoteRes, quoteOfUser, showAllQuote,  updateQuoteRes } from './resolver/quoteResolver.js'
 
 
 const resolvers = {
@@ -25,7 +25,9 @@ const resolvers = {
     Mutation: {
         signup: addUserRes,
         login: loginRes,
-        createQuote: addQuote
+        createQuote: addQuote,
+        updateQuote: updateQuoteRes, // should be same name as mutation of schemaQL 
+        deleteQuote: deleteQuoteRes
     }
     
 }

@@ -44,21 +44,10 @@ export const getUser = async (_, args) => {
   }
 };
 
-const validateJWT = async (_, args) => {
-  // we have option to pass token from args from frontend or through header I prefer header but to practice I am going to pass through args
-  try {
-    let token;
-
-    if (args["authorization"]) {
-      token = args["authorization"].split(" ");
-    }
-  } catch (error) {}
-};
-
 export const loginRes = async (_, args) => {
   try {
     const user = await UserModel.findOne({
-      email: args.credentials.email,
+      email: args.credentials.email, // in schema QL we defined input type as UserInput and we specified that object to key credential
     }).select("+password");
     const isPasswordCorrect = await user.correctPassword(
       args.credentials.password,

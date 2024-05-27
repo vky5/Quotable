@@ -16,7 +16,8 @@ export const addQuote = async (_, args, context) => {
 
     return {
         by: user.email,
-        content: args.quoteString
+        content: args.quoteString,
+        _id: quote._id
     }
 };
 
@@ -29,7 +30,8 @@ export const showAllQuote = async (_, args) =>{
     return quotes.map(quot=>{
         return {
             by: quot.by,
-            content: quot.quote
+            content: quot.quote,
+            _id: quot.id
         }
     })
 }
@@ -43,7 +45,8 @@ export const quoteOfUser = async (_, args) => {
       {
         $project: { 
           by: 1,
-          quote: 1
+          quote: 1,
+          _id: 1
         }
       }
     ]);
@@ -51,8 +54,69 @@ export const quoteOfUser = async (_, args) => {
     return quotes.map(quot=>{
         return {
             by: quot.by,
-            content: quot.quote
+            content: quot.quote,
+            _id: quot._id
         }
     })
   };
   
+
+export const updateQuoteRes = async (_, args, context) =>{
+    if (!context.id){
+        throw new Error('No token is present');
+    }
+
+    const user = await UserModel.findById(context.id);
+
+    if (!user){
+        throw new Error('Couldnt find the user with this token');
+    }
+
+    const quoteOld = await QuoteModel.findById(args.updateQuote._id)
+    if (user.email !== quoteOld.by || user.role === 'admin'){
+        throw new Error('You are not authorized to update');
+    }
+
+    const updatedQuote = await QuoteModel.findByIdAndUpdate(args.updateQuote._id, {quote: args.updateQuote.content}, {
+        new: true,
+        runValidators: true
+    })
+
+    console.log(args);
+
+    return {
+        by: updatedQuote.by,
+        content: updatedQuote.quote,
+        _id: updatedQuote._id
+    }
+}
+
+
+export const deleteQuoteRes = async (_, args, context) => {
+    if (!context.id) {
+        throw new Error('No token is present');
+    }
+
+    const user = await UserModel.findById(context.id);
+
+    if (!user) {
+        throw new Error('Couldn\'t find the user with this token');
+    }
+
+    const quoteOld = await QuoteModel.findById(args._id);
+
+    if (!quoteOld) {
+        throw new Error('Quote not found');
+    }
+
+    if (user.email !== quoteOld.by && user.role !== 'admin') {
+        throw new Error('You are not authorized to delete this quote');
+    }
+
+    await QuoteModel.findByIdAndDelete(args._id);
+
+    return {
+        status: true,
+        message: 'Quote deleted successfully'
+    };
+};

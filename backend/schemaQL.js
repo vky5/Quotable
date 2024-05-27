@@ -8,6 +8,11 @@ const typeDefs = `#graphql
         
     }
 
+    input UpdateQuoteInput {
+        _id: ID!
+        content: String 
+    }
+
     type User {
         _id: ID!
         firstName: String!
@@ -32,6 +37,13 @@ const typeDefs = `#graphql
         signup(userNew: UserInput!): UserAuthResponse
         login(credentials: LoginInput!): Token
         createQuote(quoteString: String) : Quote
+        updateQuote(updateQuote: UpdateQuoteInput!): Quote
+        deleteQuote(_id: ID!): DeleteResponse
+    }
+
+    type DeleteResponse {
+        status: Boolean!
+        message: String!
     }
 
     type UserAuthResponse {
@@ -46,6 +58,7 @@ const typeDefs = `#graphql
     type Quote {
         by: String
         content: String
+        _id: ID!
     }
 `;
 
