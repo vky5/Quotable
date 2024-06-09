@@ -1,4 +1,3 @@
-import {quotes, users} from './_db.js'
 import { getUsers, addUserRes,loginRes, getUser, quoteResUser } from './resolver/userResolver.js'
 import { addQuote, deleteQuoteRes, quoteOfUser, showAllQuote,  updateQuoteRes } from './resolver/quoteResolver.js'
 
